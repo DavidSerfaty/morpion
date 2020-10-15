@@ -26,7 +26,6 @@ class Game
   def game_status
     if @new_board.victory?
       @status = "finish"
-      game_end
     end
     return @status
   end
@@ -53,13 +52,5 @@ class Game
     else
       puts "Match nul"
     end
-
-    # if @new_board.victory?(@current_player) == TRUE
-    #   puts "BRAVO #{@current_player.name}, tu as gagné"
-    # else
-    #   puts "Match nul les bougs"
-    # end
-
-    # TO DO : permet l'affichage de fin de partie quand un vainqueur est détecté ou si il y a match nul
   end
 end

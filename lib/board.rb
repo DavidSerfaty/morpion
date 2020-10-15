@@ -21,6 +21,11 @@ class Board
   def play_turn(current_player)
     puts "#{current_player.name} (#{current_player.marker}), c'est à toi de jouer : "
     choice = gets.chomp.to_i
+    numbers = [1,2,3,4,5,6,7,8,9]
+    until numbers.include?(choice) && board[choice-1].marker == " " do
+      puts "Retentes"
+      choice = gets.chomp.to_i
+    end
     board[choice-1].marker = "#{current_player.marker}"
   end
 
