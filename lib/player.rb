@@ -1,21 +1,8 @@
 class Player
-  attr_accessor :name, :symbol, :tokens
+  attr_accessor :name, :marker
 
-  def initialize(name, symbol)
+  def initialize(name, marker)
     @name = name
-    @symbol = symbol
+    @marker = marker
   end
-
-  def show_state # methode pour connaitre l'état de santé du joueur
-    @players.each do |player|
-      puts "#{player.name} joue les #{player.symbol}"
-    end
-  end
-
-  def player_token
-    
-
-  end
-
-
 end

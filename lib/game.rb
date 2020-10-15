@@ -1,40 +1,65 @@
-class Game < Player
+class Game
+  attr_accessor :current_player, :status, :board, :players
+  #TO DO : la classe a plusieurs attr_accessor: le current_player (égal à un objet Player), le status (en cours, nul ou un objet Player s'il gagne), le Board et un array contenant les 2 joueurs.
 
-  def initialize(player1, symbol1, player2, symbol2)
-    @player1 = Player.new(player1, symbol1)
-    @player2 = Player.new(player2, symbol2)
+  def initialize
+    puts "Joueur 1, quel est ton prénom ?"
+    print ">"
+    @player1 = Player.new(gets.chomp, "X")
+    puts "Joueur 2, quel est ton prénom ?"
+    print ">"
+    @player2 = Player.new(gets.chomp, "O")
+    @new_board = Board.new
+    @status = "on going"
     @players = Array.new
     @players << @player1
     @players << @player2
-    @new_board = Board.new
+    @current_player = @players[0]
   end
 
-  def is_still_ongoing?
-
+  def turn(round)
+    @current_player = @players[round % 2]
+    @new_board.show_board
+    @new_board.play_turn(@current_player)
   end
 
-  def board_status
-    @new_board.display_board
+  def game_status
+    if @new_board.victory?
+      @status = "finish"
+      game_end
+    end
+    return @status
   end
 
-  def cell_choice(choice)
-    @new_board.cell_board(choice)
+  def new_round
+    puts "Voulez vous rejouer ? (Y / N)"
+    print "> "
+    revange = gets.chomp
+    if revange == "Y"
+      @new_board = Board.new
+      @status = "On going"
+      return "yes"
+    else
+      return "no"
+    end
   end
 
+  def game_end
+    @new_board.show_board
+    if @new_board.victory? == 1
+      puts "Bravo #{@player1.name} tu as gagné"
+    elsif @new_board.victory? == 2
+      puts "Bravo #{@player2.name} tu as gagné"
+    else
+      puts "Match nul"
+    end
 
-  # def is_victory?
-  #    if (A1 == A2 == A3 && A1.any?)||
-  #     (B1 == B2 == B3 && B1.any?)||
-  #     (C1 == C2 == C3 && C1.any||
-  #     (A1 == B2 == C3 && A1.any?)||
-  #     (A3 == B2 == C1 && A3.any?)||
-  #     (A1 == B1 == C1 && C1.any?)||
-  #     (A2 == B2 == C2 && C2.any?)||
-  #     (A3 == B3 == C3 && C3.any?)
-  #      true
-  #    else
-  #      false
-  #    end
-  #  end
+    # if @new_board.victory?(@current_player) == TRUE
+    #   puts "BRAVO #{@current_player.name}, tu as gagné"
+    # else
+    #   puts "Match nul les bougs"
+    # end
 
+    # TO DO : permet l'affichage de fin de partie quand un vainqueur est détecté ou si il y a match nul
+  end
 end

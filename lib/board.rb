@@ -1,28 +1,40 @@
-class Board < Game
+class Board
   attr_accessor :board
 
   def initialize
-    @board = [" "," "," "," "," "," "," "," "," "]
+    @board = Array.new
+    for i in 1..9
+      @board << BoardCase.new(i)
+    end
   end
 
-  def display_board
-    puts " #{@board[0]} | #{@board[1]} | #{@board[2]}   ||   1 | 2 | 3 "
-    puts "-----------        ----------- "
-    puts " #{@board[3]} | #{@board[4]} | #{@board[5]}   ||   4 | 5 | 6 "
-    puts "-----------        ----------- "
-    puts " #{@board[6]} | #{@board[7]} | #{@board[8]}   ||   7 | 8 | 9 "
+  def show_board
+    puts
+    puts " #{@board[0].marker} | #{@board[1].marker} | #{@board[2].marker}   ||   1 | 2 | 3 "
+    puts "-----------      ----------- "
+    puts " #{@board[3].marker} | #{@board[4].marker} | #{@board[5].marker}   ||   4 | 5 | 6 "
+    puts "-----------      ----------- "
+    puts " #{@board[6].marker} | #{@board[7].marker} | #{@board[8].marker}   ||   7 | 8 | 9 "
+    puts
   end
 
-  def cell_board(choice)
-    @board[choice-1] = "X"
+  def play_turn(current_player)
+    puts "#{current_player.name} (#{current_player.marker}), c'est à toi de jouer : "
+    choice = gets.chomp.to_i
+    board[choice-1].marker = "#{current_player.marker}"
+  end
 
-    # case play
-    # when "B2"
-    #   @B2 = player.symbol
-    # when "A1"
-    #   @A1 = "X"
-    #
-    # end
+  def victory?
+    win_combos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    victory = nil
+    win_combos.each do |combo|
+      if @board[combo[0]].marker == 'X' && @board[combo[1]].marker == 'X' && @board[combo[2]].marker == 'X'
+        victory = 1
+      elsif @board[combo[0]].marker == 'O' && @board[combo[1]].marker == 'O' && @board[combo[2]].marker == 'O'
+        victory = 2
+      end
+    end
+    victory
   end
 
 end

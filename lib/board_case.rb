@@ -1,7 +1,9 @@
-class BoardCase < Game
+class BoardCase
+  attr_accessor :id, :marker
 
-  def initialize
-
+  def initialize(id)
+    @id = id
+    @marker = " "
   end
 
 end
