@@ -6,7 +6,6 @@ require_relative 'lib/board'
 require_relative 'lib/game'
 require_relative 'lib/player'
 require_relative 'lib/board_case'
-require_relative 'lib/show'
 
 
 puts "Salut et bienvenue dans notre super jeu de morpion !"
